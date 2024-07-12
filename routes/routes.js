@@ -1,11 +1,25 @@
-import { Router } from 'express';
-import { getWeatherByCity, loadUser, postUser } from '../controllers/userController.js';
+import { Router } from "express";
+import {
+  AddToFav,
+  DeleteFav,
+  getDailyForcastByCity,
+  GetFavorites,
+  getWeatherByCity,
+  loadUser,
+  postUser,
+} from "../controllers/userController.js";
 const router = Router();
-router.post('/register', postUser)
-router.post('/login', loadUser)
-router.get('/weather/current', getWeatherByCity)
-// router.get('/weather/forecast/', getWeatherByCity)
-// router.post('/favorites/:name/:temp/:desc/:humidity', AddToFav)
-// router.get('/favorites', GetFavorites)
-// router.get('/delete/:id', DeleteUserFav)
+
+// Get
+router.get("/weather/current", getWeatherByCity);
+router.get("/weather/forecast", getDailyForcastByCity);
+router.get("/favorites", GetFavorites);
+
+//Post
+router.post("/register", postUser);
+router.post("/login", loadUser);
+router.post("/favorites", AddToFav);
+
+//Put
+router.put("/deleteFavorites/:id", DeleteFav);
 export default router;

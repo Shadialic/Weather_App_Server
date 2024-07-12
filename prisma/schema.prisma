@@ -19,3 +19,10 @@ model User {
   userName  String
   password  String
 }
+model Wishlist {
+  id          Int     @id @default(autoincrement())
+  place       String  @unique
+  temperature String
+  description String
+  humidity    String
+}
