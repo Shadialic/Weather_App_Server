@@ -90,6 +90,7 @@ const loadUser = async (req, res) => {
 const getWeatherByCity = async (req, res) => {
   try {
     const { city } = req.query;
+
     if (city) {
       const response = await fetch(
         `${process.env.BASE_URL}?q=${city}&appid=${process.env.API_KEY}&units=metric`
@@ -123,6 +124,29 @@ const getDailyForcastByCity = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+const GetPastForecast = async (req, res) => {
+  const { city } = req.query;
+  try {
+    const start = new Date();
+    const end = new Date();
+    start.setDate(end.getDate() - 7);
+    const lat = 25.2582;
+    const lon = 55.3047;
+    const startDate = start.toISOString().split("T")[0];
+    const endDate = end.toISOString().split("T")[0];
+    const response = await fetch(
+      `${process.env.PAST_FORCAST_BASE_URL}?q=${city}?lat=${lat}&lon=${lon}&type=hour&start_date=${startDate}&end_date=${endDate}&appid=${process.env.API_KEY}&units=metric`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch forecast data");
+    }
+    const data = await response.json();
+    res.json({ success: true, message: "Response sent to frontend", data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -205,4 +229,5 @@ export {
   AddToFav,
   GetFavorites,
   DeleteFav,
+  GetPastForecast,
 };

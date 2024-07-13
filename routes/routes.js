@@ -4,6 +4,7 @@ import {
   DeleteFav,
   getDailyForcastByCity,
   GetFavorites,
+  GetPastForecast,
   getWeatherByCity,
   loadUser,
   postUser,
@@ -13,6 +14,7 @@ const router = Router();
 // Get
 router.get("/weather/current", getWeatherByCity);
 router.get("/weather/forecast", getDailyForcastByCity);
+router.get("/weather/historical", GetPastForecast);
 router.get("/favorites", GetFavorites);
 
 //Post
@@ -22,4 +24,5 @@ router.post("/favorites", AddToFav);
 
 //Put
 router.put("/deleteFavorites/:id", DeleteFav);
+
 export default router;
